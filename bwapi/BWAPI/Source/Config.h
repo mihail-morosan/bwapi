@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <storm.h>
+#include <fstream>
 
 // Functions
 std::string LoadConfigString(const char *pszKey, const char *pszItem, const char *pszDefault = NULL);
@@ -13,8 +14,18 @@ void InitPrimaryConfig();
 // Data
 inline const std::string& installPath()
 {
-  static const std::string path = LoadRegString("starcraft", "InstallPath") + "\\";
-  return path;
+  //static const std::string path = LoadRegString("starcraft", "InstallPath") + "\\";
+  std::string sInstallPath;
+
+
+  std::ofstream test2("runfrom.txt");
+  test2 << "test";
+  test2.close();
+
+  std::ifstream test("settings.txt");
+  test >> sInstallPath;
+  test.close();
+  return sInstallPath;
 }
 inline const std::string& configPath()
 {

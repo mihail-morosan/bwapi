@@ -15,16 +15,27 @@ void InitPrimaryConfig();
 inline const std::string& installPath()
 {
   //static const std::string path = LoadRegString("starcraft", "InstallPath") + "\\";
-  std::string sInstallPath;
+  std::string sInstallPath = "";
+
+  std::ifstream settings("Settings.ini");
+
+  for (std::string line; std::getline(settings, line); )
+  {
+	  if (line.substr(0, 4).compare("Game") == 0)
+	  {
+		  sInstallPath = line.substr(9, 255);
+	  }
+  }
 
 
-  std::ofstream test2("runfrom.txt");
-  test2 << "test";
-  test2.close();
+  settings.close();
 
-  std::ifstream test("settings.txt");
-  test >> sInstallPath;
+  std::ofstream test("test.txt");
+  test << sInstallPath;
   test.close();
+  /*std::ifstream test("settings.txt");
+  test >> sInstallPath;
+  test.close();*/
   return sInstallPath;
 }
 inline const std::string& configPath()

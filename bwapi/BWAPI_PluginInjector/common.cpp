@@ -22,9 +22,23 @@ std::string GetBWAPIDataDirectory()
 {
 	std::string sInstallPath;
 
-	std::ifstream test("settings.txt");
-	test >> sInstallPath;
-	test.close();
+	std::ifstream settings("Settings.ini");
+
+	for (std::string line; std::getline(settings, line); )
+	{
+		if (line.substr(0, 4).compare("Game") == 0)
+		{
+			sInstallPath = line.substr(9, 255);
+		}
+	}
+
+
+	settings.close();
+
+	//std::ofstream test("test.txt");
+	//test << sInstallPath;
+	//test.close();
+
 
 	//std::string sInstallPath = GetRegString("SOFTWARE\\Blizzard Entertainment\\Starcraft", "InstallPath");
 	return sInstallPath + "bwapi-data";
